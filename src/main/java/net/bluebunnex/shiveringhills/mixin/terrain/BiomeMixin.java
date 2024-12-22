@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 import java.awt.*;
 
 @Mixin(Biome.class)
-public class BiomeMixin {
+public abstract class BiomeMixin {
 
     /**
      * @author BlueBunnex
@@ -18,11 +18,15 @@ public class BiomeMixin {
     @Overwrite
     public static Biome locateBiome(float temperature, float downfall) {
 
-        if (downfall > 0.5) {
-            return Biome.TAIGA;
-        } else {
+        if (downfall > 0.9) {
             return Biome.TUNDRA;
         }
+
+        if (downfall > 0.1) {
+            return Biome.TAIGA;
+        }
+
+        return Biome.TUNDRA;
     }
 
     /**
@@ -34,16 +38,5 @@ public class BiomeMixin {
     public int getSkyColor(float f) {
 
         return Color.getHSBColor(0, 0, 0).getRGB();
-
-//        f /= 3.0F;
-//        if (f < -1.0F) {
-//            f = -1.0F;
-//        }
-//
-//        if (f > 1.0F) {
-//            f = 1.0F;
-//        }
-//
-//        return Color.getHSBColor(0.62222224F - f * 0.05F, 0.5F + f * 0.1F, 1.0F).getRGB();
     }
 }

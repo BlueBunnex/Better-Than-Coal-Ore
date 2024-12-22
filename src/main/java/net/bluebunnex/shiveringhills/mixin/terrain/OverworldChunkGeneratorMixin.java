@@ -2,18 +2,34 @@ package net.bluebunnex.shiveringhills.mixin.terrain;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.math.noise.OctavePerlinNoiseSampler;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkSource;
 import net.minecraft.world.gen.chunk.OverworldChunkGenerator;
 import net.minecraft.world.gen.feature.Feature;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Random;
+
 @Mixin(OverworldChunkGenerator.class)
 public class OverworldChunkGeneratorMixin {
+
+    @Shadow
+    private Random random;
+
+    @Shadow
+    private double[] heightMap;
+
+    @Shadow
+    private World world;
+
+    @Shadow
+    OctavePerlinNoiseSampler perlinNoise1;
 
     /**
      * @author BlueBunnex
@@ -22,16 +38,11 @@ public class OverworldChunkGeneratorMixin {
     @Overwrite
     private double[] generateHeightMap(double[] heightMap, int x, int y, int z, int sizeX, int sizeY, int sizeZ) {
 
-        OverworldChunkGeneratorAccessorMixin access = (OverworldChunkGeneratorAccessorMixin) this;
+        double[] downfallMap = world.method_1781().downfallMap;
 
-        OctavePerlinNoiseSampler noise = access.getNoise1();
+        if (perlinNoise1 == null) {
 
-        double[] downfallMap = access.getWorld().method_1781().downfallMap;
-
-        if (noise == null) {
-
-            noise = new OctavePerlinNoiseSampler(access.getRandom(), 8);
-            access.setNoise1(noise);
+            perlinNoise1 = new OctavePerlinNoiseSampler(random, 8);
         }
 
         if (heightMap == null) {
@@ -51,7 +62,7 @@ public class OverworldChunkGeneratorMixin {
                 // lower downfall = flatter terrain, for now
                 // noise samples seem to be between -128 and 128
                 double downfall = downfallMap[var18 * 16 + var20];
-                double sample = ((noise.sample((x + dx) * 7, (z + dz) * 7) + 128) / 32 * downfall + 8);
+                double sample = ((perlinNoise1.sample((x + dx) * 7, (z + dz) * 7) + 128) / 32 * downfall + 8);
 
                 for(int dy = 0; dy < sizeY; dy++) {
 
@@ -74,9 +85,7 @@ public class OverworldChunkGeneratorMixin {
     @Overwrite
     public void buildTerrain(int chunkX, int chunkZ, byte[] blocks, Biome[] biomes, double[] temperatures) {
 
-        double[] heightMap = ((OverworldChunkGeneratorAccessorMixin) this).getHeightMap();
-
-        ((OverworldChunkGeneratorAccessorMixin) this).setHeightMap(this.generateHeightMap(heightMap, chunkX * 4, 0, chunkZ * 4, 5, 17, 5));
+        heightMap = this.generateHeightMap(heightMap, chunkX * 4, 0, chunkZ * 4, 5, 17, 5);
 
         for(int var11 = 0; var11 < 4; ++var11) {
             for(int var12 = 0; var12 < 4; ++var12) {
@@ -142,12 +151,10 @@ public class OverworldChunkGeneratorMixin {
     @Inject(method = "decorate", at = @At("HEAD"))
     private void moreTrees(ChunkSource source, int x, int z, CallbackInfo ci) {
 
-        OverworldChunkGeneratorAccessorMixin access = (OverworldChunkGeneratorAccessorMixin) this;
-
         int chunkX = x * 16;
         int chunkZ = z * 16;
 
-        Biome biome = access.getWorld().method_1781().getBiome(chunkX + 16, chunkZ + 16);
+        Biome biome = world.method_1781().getBiome(chunkX + 16, chunkZ + 16);
 
         if (biome != Biome.TAIGA) {
             return;
@@ -156,11 +163,11 @@ public class OverworldChunkGeneratorMixin {
         int featureX, featureZ;
 
         for (int i = 0; i < 30; i++) {
-            featureX = chunkX + access.getRandom().nextInt(16) + 8;
-            featureZ = chunkZ + access.getRandom().nextInt(16) + 8;
-            Feature var18 = biome.getRandomTreeFeature(access.getRandom());
+            featureX = chunkX + random.nextInt(16) + 8;
+            featureZ = chunkZ + random.nextInt(16) + 8;
+            Feature var18 = biome.getRandomTreeFeature(random);
             var18.prepare(1.0, 1.0, 1.0);
-            var18.generate(access.getWorld(), access.getRandom(), featureX, access.getWorld().getTopY(featureX, featureZ), featureZ);
+            var18.generate(world, random, featureX, world.getTopY(featureX, featureZ), featureZ);
         }
     }
 }

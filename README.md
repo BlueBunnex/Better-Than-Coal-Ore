@@ -8,8 +8,10 @@ A larger mod project.
 - revised worldgen; taller mountains; more biomes
 - new mobs (mostly enemies)
 - final boss (end goal)
+- temperature system; warm (heal slowly), cold, freezing (take damage)
+- hunger system (being full does NOT mean you heal); none, peckish, hungry, starving (take damage)
 
-<p>silver: a metal capable of being imbued with magic?</p>
+silver: a metal capable of being imbued with magic?
 
 ### Spellbooks
 - **Rot**: turns a log into a rotted log, making it soft enough to break
