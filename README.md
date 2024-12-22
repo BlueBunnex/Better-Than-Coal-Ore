@@ -3,15 +3,33 @@ A larger mod project.
     
 ## All features
 - BTW-esque gameplay (but smaller in scope); forced hardcore
-- always winter
 - mana/magic system; unlock spellbooks as you progress
-- revised worldgen; taller mountains; more biomes
+- revised worldgen; taller mountains; new biomes; always winter
 - new mobs (mostly enemies)
 - final boss (end goal)
-- temperature system; warm (heal slowly), cold, freezing (take damage)
-- hunger system (being full does NOT mean you heal); none, peckish, hungry, starving (take damage)
 
 silver: a metal capable of being imbued with magic?
+
+### Temperature system
+**Stages:**
+- Warm (heal slowly)
+- Normal
+- Cold
+- Freezing (take damage)
+
+During the day, you will never drop past "cold" unless you are in water or at very high altitudes.
+
+During the night, you will begin to freeze unless near a heat source.
+
+### Hunger system
+Unlike modern hunger, being full does NOT mean you heal (healing only occurs when warm). Instead, hunger is
+simply another system that can kill you if not attended to.
+
+**Stages:**
+- Normal
+- Peckish
+- Hungry
+- Starving (take damage)
 
 ### Spellbooks
 - **Rot**: turns a log into a rotted log, making it soft enough to break
