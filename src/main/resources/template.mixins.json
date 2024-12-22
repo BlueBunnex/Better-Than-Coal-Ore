@@ -4,14 +4,17 @@
   "package": "net.bluebunnex.shiveringhills.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "terrain.OverworldChunkGeneratorMixin",
+    "player.PlayerEntityMixin",
     "terrain.BiomeMixin",
     "terrain.BiomeSourceMixin",
-    "player.PlayerEntityMixin",
-    "gui.InGameHudMixin"
+    "terrain.OverworldChunkGeneratorMixin"
   ],
   "server": [],
-  "client": [],
+  "client": [
+    "gui.ScreenAccessorMixin",
+    "gui.DeathScreenMixin",
+    "gui.InGameHudMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

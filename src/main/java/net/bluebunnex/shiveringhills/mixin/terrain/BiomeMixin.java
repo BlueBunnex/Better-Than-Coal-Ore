@@ -18,11 +18,7 @@ public abstract class BiomeMixin {
     @Overwrite
     public static Biome locateBiome(float temperature, float downfall) {
 
-        if (downfall > 0.9) {
-            return Biome.TUNDRA;
-        }
-
-        if (downfall > 0.1) {
+        if (downfall > 0.5) {
             return Biome.TAIGA;
         }
 
