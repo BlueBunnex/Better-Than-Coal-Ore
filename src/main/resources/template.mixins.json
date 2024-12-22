@@ -6,7 +6,9 @@
   "mixins": [
     "terrain.OverworldChunkGeneratorMixin",
     "terrain.BiomeMixin",
-    "terrain.BiomeSourceMixin"
+    "terrain.BiomeSourceMixin",
+    "player.PlayerEntityMixin",
+    "gui.InGameHudMixin"
   ],
   "server": [],
   "client": [],
