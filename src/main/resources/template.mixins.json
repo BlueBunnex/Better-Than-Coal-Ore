@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "package": "net.bluebunnex.shiveringhills.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [ "TerrainMixin", "TerrainAccessorMixin" ],
+  "mixins": [ "TerrainMixin", "TerrainAccessorMixin", "BiomeMixin" ],
   "server": [],
   "client": [],
   "injectors": {
