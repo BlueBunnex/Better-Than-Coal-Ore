@@ -1,25 +1,20 @@
 {
   "schemaVersion": 1,
-  "id": "template",
+  "id": "shiveringhills",
   "version": "${version}",
 
-  "name": "Template",
+  "name": "Shivering Hills",
   "description": "",
-  "authors": [
-    "DanyGames2014"
-  ],
+  "authors": [ "BlueBunnex" ],
 
   "license": "MIT",
-  "icon": "assets/template/icon.png",
+  "icon": "assets/shiveringhills/icon.png",
 
   "environment": "*",
   "entrypoints": {
-    "stationapi:event_bus": [
-    ],
-    "stationapi:event_bus_client": [
-    ],
-    "stationapi:event_bus_server": [
-    ]
+    "stationapi:event_bus": [],
+    "stationapi:event_bus_client": [],
+    "stationapi:event_bus_server": []
   },
   "mixins": [
     "template.mixins.json"
