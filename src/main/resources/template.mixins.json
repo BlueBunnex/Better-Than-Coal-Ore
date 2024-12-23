@@ -4,6 +4,7 @@
   "package": "net.bluebunnex.shiveringhills.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "item.FoodItemMixin",
     "player.PlayerEntityMixin",
     "terrain.BiomeMixin",
     "terrain.BiomeSourceMixin",
@@ -11,9 +12,9 @@
   ],
   "server": [],
   "client": [
-    "gui.ScreenAccessorMixin",
     "gui.DeathScreenMixin",
-    "gui.InGameHudMixin"
+    "gui.InGameHudMixin",
+    "gui.ScreenAccessorMixin"
   ],
   "injectors": {
     "defaultRequire": 1

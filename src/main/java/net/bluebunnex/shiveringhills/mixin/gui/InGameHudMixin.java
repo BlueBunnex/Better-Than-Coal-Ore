@@ -1,11 +1,11 @@
 package net.bluebunnex.shiveringhills.mixin.gui;
 
+import net.bluebunnex.shiveringhills.src.IPlayer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.ScreenScaler;
-import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,6 +31,6 @@ public class InGameHudMixin {
 
         TextRenderer textRenderer = this.minecraft.textRenderer;
 
-        textRenderer.drawWithShadow("Starving + Freezing", x, y, -1);
+        textRenderer.drawWithShadow(((IPlayer) this.minecraft.player).getStatusText(), x, y, -1);
     }
 }
