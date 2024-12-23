@@ -1,7 +1,9 @@
 package net.bluebunnex.shiveringhills.mixin.player;
 
 import net.bluebunnex.shiveringhills.src.IPlayer;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -12,15 +14,22 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(PlayerEntity.class)
 public class PlayerEntityMixin implements IPlayer {
 
-    // TODO add these values to NBT
-    @Unique
-    int statusDamageTimer;
+    private static int MAX_HUNGER = 8000;
+    private static int MAX_WARMTH = 1000;
+
+    private static int DYING_TICKS = 100;
+    private static int HEALING_TICKS = 60;
+
+    // might add constants for warmth cutoffs
 
     @Unique
-    int hunger = 1000;
+    int healthChangeTimer;
 
     @Unique
-    int warmth = 1000;
+    int hunger = MAX_HUNGER;
+
+    @Unique
+    int warmth = MAX_WARMTH;
 
     @Override
     public String getStatusText() {
@@ -32,7 +41,7 @@ public class PlayerEntityMixin implements IPlayer {
     @Override
     public boolean feed(int vanillaHealthRestored) {
 
-        hunger += vanillaHealthRestored * 500;
+        hunger += vanillaHealthRestored * 400;
 
         return true;
     }
@@ -42,40 +51,92 @@ public class PlayerEntityMixin implements IPlayer {
 
         PlayerEntity player = ((PlayerEntity) (Object) this);
 
-        boolean hasSkyLight = player.world.hasSkyLight(MathHelper.floor(player.x), MathHelper.floor(player.y), MathHelper.floor(player.z));
-
+        // hunger change
         if (hunger > 0)
             hunger--;
 
-        if (hasSkyLight) {
+        // warmth change
+        int targetWarmth = 0;
 
-            if (warmth > 300)
-                warmth--;
+        boolean hasSkyLight = player.world.hasSkyLight(MathHelper.floor(player.x), MathHelper.floor(player.y), MathHelper.floor(player.z));
+        boolean isLit = 4 < player.world.getLightLevel(MathHelper.floor(player.x), MathHelper.floor(player.y), MathHelper.floor(player.z));
 
-        } else {
+        boolean isStronglyWarmed = false; // based on being near blocks like firepits or lava or whatever
+        boolean isWeaklyWarmed = hasSkyLight || isLit;
 
-            if (warmth > 0)
-                warmth--;
+        if (isStronglyWarmed) {
+
+            targetWarmth = 1000;
+
+        } else if (isWeaklyWarmed) {
+
+            targetWarmth = 300;
         }
 
-        // heal when warmth is high
-        //player.heal(1);
+        if (warmth > targetWarmth) {
+            warmth--;
+        } else {
+            warmth++;
+        }
+
+        // being in water makes you immediately frigid
+        int stoodBlockId = player.world.getBlockId(MathHelper.floor(player.x), MathHelper.floor(player.y), MathHelper.floor(player.z));
+
+        if (stoodBlockId == Block.WATER.id || stoodBlockId == Block.FLOWING_WATER.id) {
+            warmth = 0;
+        }
 
         // damage when statuses are low
         boolean hungerDamaging = hunger <= 0;
-        boolean warmthDamaging = warmth <= 200;
+        boolean warmthDamaging = warmth <= 100;
 
         if (hungerDamaging || warmthDamaging) {
 
-            statusDamageTimer--;
+            healthChangeTimer--;
 
-            if (statusDamageTimer <= 0) {
+            if (healthChangeTimer <= 0) {
 
                 player.damage(null, 1);
 
-                statusDamageTimer = hungerDamaging && warmthDamaging ? 50 : 100;
+                healthChangeTimer = hungerDamaging && warmthDamaging ? DYING_TICKS / 2 : DYING_TICKS;
+            }
+
+        // heal when warmth is high (and not dying)
+        } else if (warmth > 900) {
+
+            healthChangeTimer--;
+
+            if (healthChangeTimer <= 0) {
+
+                player.heal(1);
+
+                healthChangeTimer = HEALING_TICKS;
             }
         }
+    }
+
+    @Inject(method = "readNbt", at = @At("TAIL"))
+    public void readNbtMixin(NbtCompound nbt, CallbackInfo ci) {
+
+        this.healthChangeTimer = nbt.getInt("ShiveringHills_HpTimer");
+        this.hunger = nbt.getInt("ShiveringHills_Hunger");
+        this.warmth = nbt.getInt("ShiveringHills_Warmth");
+
+        if (!nbt.contains("ShiveringHills_Hunger")) {
+            this.hunger = MAX_HUNGER;
+        }
+
+        if (!nbt.contains("ShiveringHills_Warmth")) {
+            this.warmth = MAX_WARMTH;
+        }
+    }
+
+    @Inject(method = "writeNbt", at = @At("TAIL"))
+    public void writeNbtMixin(NbtCompound nbt, CallbackInfo ci) {
+
+        nbt.putInt("ShiveringHills_HpTimer", this.healthChangeTimer);
+        nbt.putInt("ShiveringHills_Hunger", this.hunger);
+        nbt.putInt("ShiveringHills_Warmth", this.warmth);
     }
 
 //    @Inject(method = "onKilledBy", at = @At("TAIL"))
