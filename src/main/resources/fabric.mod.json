@@ -12,13 +12,11 @@
 
   "environment": "*",
   "entrypoints": {
-    "stationapi:event_bus": [],
+    "stationapi:event_bus": [ "net.bluebunnex.shiveringhills.ShiveringHills" ],
     "stationapi:event_bus_client": [],
     "stationapi:event_bus_server": []
   },
-  "mixins": [
-    "template.mixins.json"
-  ],
+  "mixins": [ "template.mixins.json" ],
 
   "depends": {
     "minecraft": "1.0.0-beta.7.3"

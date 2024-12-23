@@ -35,7 +35,7 @@ public class PlayerEntityMixin implements IPlayer {
     @Override
     public String getStatusText() {
 
-        return "H=" + hunger + "; C=" + warmth;
+        return "H=" + hunger + "/8000; C=" + warmth + "/1000";
 //        return "Starving + Freezing";
     }
 
@@ -45,6 +45,25 @@ public class PlayerEntityMixin implements IPlayer {
         hunger += vanillaHealthRestored * 400;
 
         return true;
+    }
+
+    // check 5x3x5 for blocks like firepits or lava or whatever
+    @Unique
+    private boolean hasNearbyHeatBlock(World world, int x, int y, int z) {
+
+        for (int dx = -2; dx <= 2; dx++) {
+            for (int dz = -2; dz <= 2; dz++) {
+                for (int dy = -1; dy <= 1; dy++) {
+
+                    int blockID = world.getBlockId(x + dx, y + dy, z + dz);
+
+                    if (blockID == Block.LAVA.id)
+                        return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
@@ -64,8 +83,6 @@ public class PlayerEntityMixin implements IPlayer {
 
         boolean isStronglyWarmed = hasNearbyHeatBlock(player.world, MathHelper.floor(player.x), MathHelper.floor(player.y) - 1, MathHelper.floor(player.z));
         boolean isWeaklyWarmed = hasSkyLight || isLit;
-
-        System.out.println(isStronglyWarmed);
 
         if (isStronglyWarmed) {
 
@@ -116,25 +133,6 @@ public class PlayerEntityMixin implements IPlayer {
                 healthChangeTimer = HEALING_TICKS;
             }
         }
-    }
-
-    // check 5x3x5 for blocks like firepits or lava or whatever
-    @Unique
-    private boolean hasNearbyHeatBlock(World world, int x, int y, int z) {
-
-        for (int dx = -2; dx <= 2; dx++) {
-            for (int dz = -2; dz <= 2; dz++) {
-                for (int dy = -1; dy <= 1; dy++) {
-
-                    int blockID = world.getBlockId(x + dx, y + dy, z + dz);
-
-                    if (blockID == Block.LAVA.id)
-                        return true;
-                }
-            }
-        }
-
-        return false;
     }
 
     @Inject(method = "readNbt", at = @At("TAIL"))
