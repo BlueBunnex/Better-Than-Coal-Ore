@@ -6,15 +6,16 @@
   "mixins": [
     "item.FoodItemMixin",
     "player.PlayerEntityMixin",
-    "terrain.BiomeMixin",
-    "terrain.BiomeSourceMixin",
-    "terrain.OverworldChunkGeneratorMixin"
+    "world.BiomeMixin",
+    "world.BiomeSourceMixin",
+    "world.OverworldChunkGeneratorMixin"
   ],
   "server": [],
   "client": [
     "gui.DeathScreenMixin",
     "gui.InGameHudMixin",
-    "gui.ScreenAccessorMixin"
+    "gui.ScreenAccessorMixin",
+    "world.DimensionMixin"
   ],
   "injectors": {
     "defaultRequire": 1

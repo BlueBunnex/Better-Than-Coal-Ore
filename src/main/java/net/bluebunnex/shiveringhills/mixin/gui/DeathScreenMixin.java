@@ -44,6 +44,6 @@ public class DeathScreenMixin {
 
         String text = "Can't respawn, this mod's hardcore!";
 
-        textRenderer.drawWithShadow(text, width / 2 - textRenderer.getWidth(text) / 2, height / 2 + 16, -1);
+        textRenderer.drawWithShadow(text, width / 2 - textRenderer.getWidth(text) / 2, height / 4 + 80, -1);
     }
 }

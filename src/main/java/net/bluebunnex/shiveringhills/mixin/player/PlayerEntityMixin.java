@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -61,8 +62,10 @@ public class PlayerEntityMixin implements IPlayer {
         boolean hasSkyLight = player.world.hasSkyLight(MathHelper.floor(player.x), MathHelper.floor(player.y), MathHelper.floor(player.z));
         boolean isLit = 4 < player.world.getLightLevel(MathHelper.floor(player.x), MathHelper.floor(player.y), MathHelper.floor(player.z));
 
-        boolean isStronglyWarmed = false; // based on being near blocks like firepits or lava or whatever
+        boolean isStronglyWarmed = hasNearbyHeatBlock(player.world, MathHelper.floor(player.x), MathHelper.floor(player.y) - 1, MathHelper.floor(player.z));
         boolean isWeaklyWarmed = hasSkyLight || isLit;
+
+        System.out.println(isStronglyWarmed);
 
         if (isStronglyWarmed) {
 
@@ -79,8 +82,8 @@ public class PlayerEntityMixin implements IPlayer {
             warmth++;
         }
 
-        // being in water makes you immediately frigid
-        int stoodBlockId = player.world.getBlockId(MathHelper.floor(player.x), MathHelper.floor(player.y), MathHelper.floor(player.z));
+        // being in water (foot block, not head block) makes you immediately frigid
+        int stoodBlockId = player.world.getBlockId(MathHelper.floor(player.x), MathHelper.floor(player.y) - 1, MathHelper.floor(player.z));
 
         if (stoodBlockId == Block.WATER.id || stoodBlockId == Block.FLOWING_WATER.id) {
             warmth = 0;
@@ -113,6 +116,25 @@ public class PlayerEntityMixin implements IPlayer {
                 healthChangeTimer = HEALING_TICKS;
             }
         }
+    }
+
+    // check 5x3x5 for blocks like firepits or lava or whatever
+    @Unique
+    private boolean hasNearbyHeatBlock(World world, int x, int y, int z) {
+
+        for (int dx = -2; dx <= 2; dx++) {
+            for (int dz = -2; dz <= 2; dz++) {
+                for (int dy = -1; dy <= 1; dy++) {
+
+                    int blockID = world.getBlockId(x + dx, y + dy, z + dz);
+
+                    if (blockID == Block.LAVA.id)
+                        return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     @Inject(method = "readNbt", at = @At("TAIL"))

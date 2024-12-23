@@ -1,4 +1,4 @@
-package net.bluebunnex.shiveringhills.mixin.terrain;
+package net.bluebunnex.shiveringhills.mixin.world;
 
 import net.minecraft.world.biome.source.BiomeSource;
 import org.spongepowered.asm.mixin.Mixin;

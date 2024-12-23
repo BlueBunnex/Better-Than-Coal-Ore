@@ -1,6 +1,8 @@
 package net.bluebunnex.shiveringhills.mixin.gui;
 
 import net.bluebunnex.shiveringhills.src.IPlayer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.font.TextRenderer;
@@ -13,12 +15,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
+@Environment(EnvType.CLIENT)
 public class InGameHudMixin {
 
     @Shadow
     private Minecraft minecraft;
 
-    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerInventory;getArmorStack(I)Lnet/minecraft/item/ItemStack;"))
+    @Inject(method = "render", at = @At("TAIL"))
     private void addPlayerStatuses(float tickDelta, boolean screenOpen, int mouseX, int mouseY, CallbackInfo ci) {
 
         ScreenScaler scaler = new ScreenScaler(this.minecraft.options, this.minecraft.displayWidth, this.minecraft.displayHeight);

@@ -1,4 +1,4 @@
-package net.bluebunnex.shiveringhills.mixin.terrain;
+package net.bluebunnex.shiveringhills.mixin.world;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

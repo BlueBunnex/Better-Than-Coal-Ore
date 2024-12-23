@@ -1,4 +1,4 @@
-package net.bluebunnex.shiveringhills.mixin.terrain;
+package net.bluebunnex.shiveringhills.mixin.world;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.math.noise.OctavePerlinNoiseSampler;
