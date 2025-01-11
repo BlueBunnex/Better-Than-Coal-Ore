@@ -1,4 +1,4 @@
-package net.bluebunnex.shiveringhills.src;
+package net.bluebunnex.btco.src;
 
 public interface IPlayer {
 

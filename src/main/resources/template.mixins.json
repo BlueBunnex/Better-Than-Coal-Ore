@@ -1,21 +1,13 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "net.bluebunnex.shiveringhills.mixin",
+  "package": "net.bluebunnex.btco.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [
-    "item.FoodItemMixin",
-    "player.PlayerEntityMixin",
-    "world.BiomeMixin",
-    "world.BiomeSourceMixin",
-    "world.OverworldChunkGeneratorMixin"
-  ],
+  "mixins": [],
   "server": [],
   "client": [
-    "gui.DeathScreenMixin",
-    "gui.InGameHudMixin",
-    "gui.ScreenAccessorMixin",
-    "world.DimensionMixin"
+    "DeathScreenMixin",
+    "ScreenAccessorMixin"
   ],
   "injectors": {
     "defaultRequire": 1

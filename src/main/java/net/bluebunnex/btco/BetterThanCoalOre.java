@@ -1,4 +1,4 @@
-package net.bluebunnex.shiveringhills;
+package net.bluebunnex.btco;
 
 import net.mine_diver.unsafeevents.listener.EventListener;
 import net.modificationstation.stationapi.api.event.registry.ItemRegistryEvent;
@@ -6,7 +6,7 @@ import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
 import net.modificationstation.stationapi.api.util.Namespace;
 import net.modificationstation.stationapi.api.util.Null;
 
-public class ShiveringHills {
+public class BetterThanCoalOre {
 
     @Entrypoint.Namespace
     public static final Namespace NAMESPACE = Null.get();

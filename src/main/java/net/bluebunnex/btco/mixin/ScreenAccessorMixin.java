@@ -1,4 +1,4 @@
-package net.bluebunnex.shiveringhills.mixin.gui;
+package net.bluebunnex.btco.mixin;
 
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;

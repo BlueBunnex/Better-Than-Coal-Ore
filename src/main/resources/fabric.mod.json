@@ -1,24 +1,18 @@
 {
   "schemaVersion": 1,
-  "id": "shiveringhills",
+  "id": "btco",
   "version": "${version}",
-
-  "name": "Shivering Hills",
-  "description": "",
+  "name": "Better Than Coal Ore",
+  "description": "A challenge mod similar to Better Than Wolves.",
   "authors": [ "BlueBunnex" ],
-
   "license": "MIT",
-  "icon": "assets/shiveringhills/icon.png",
-
+  "icon": "assets/btco/icon.png",
   "environment": "*",
   "entrypoints": {
-    "stationapi:event_bus": [ "net.bluebunnex.shiveringhills.ShiveringHills" ],
+    "stationapi:event_bus": [ "net.bluebunnex.btco.BetterThanCoalOre" ],
     "stationapi:event_bus_client": [],
     "stationapi:event_bus_server": []
   },
   "mixins": [ "template.mixins.json" ],
-
-  "depends": {
-    "minecraft": "1.0.0-beta.7.3"
-  }
+  "depends": { "minecraft": "1.0.0-beta.7.3" }
 }
