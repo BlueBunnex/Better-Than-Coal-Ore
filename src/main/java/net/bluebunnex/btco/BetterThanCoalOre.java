@@ -15,6 +15,7 @@ public class BetterThanCoalOre {
 
     public static Item DIRT_PILE;
     public static Item SAND_PILE;
+    public static Item GRAVEL_PILE;
 
     @EventListener
     public void registerItems(ItemRegistryEvent event) {
@@ -24,5 +25,8 @@ public class BetterThanCoalOre {
 
         SAND_PILE = new TemplateItem(NAMESPACE.id("sand_pile"))
                 .setTranslationKey(NAMESPACE, "sand_pile");
+
+        GRAVEL_PILE = new TemplateItem(NAMESPACE.id("gravel_pile"))
+                .setTranslationKey(NAMESPACE, "gravel_pile");
     }
 }

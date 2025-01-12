@@ -3,7 +3,10 @@
   "minVersion": "0.8",
   "package": "net.bluebunnex.btco.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [],
+  "mixins": [
+    "BlockMixin",
+    "GravelBlockMixin"
+  ],
   "server": [],
   "client": [
     "DeathScreenMixin",
