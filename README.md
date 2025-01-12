@@ -2,7 +2,9 @@
 **Better Than Coal Ore** (BTCO) is a challenge Mod for b1.7.3 with an actual end goal.
 
 # TODO
-- sand and dirt now drop sand and dirt piles, and a chance of a rock (sand's chance is higher)
+- sand, gravel, and dirt now drop sand, gravel, and dirt piles, and a chance of a rock/flint (chances are higher for gravel, and some for sand)
+- rock + flint = Striker
+- neither wood nor stone tools exist, you have to start at... copper?
 
 ## Plan
 - adds dark knights to the nether that guard a structure that contains an item you need to summon the final boss
