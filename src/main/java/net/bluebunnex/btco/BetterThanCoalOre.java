@@ -16,6 +16,9 @@ public class BetterThanCoalOre {
     public static Item DIRT_PILE;
     public static Item SAND_PILE;
     public static Item GRAVEL_PILE;
+    public static Item ROCK;
+    public static Item FLINTKNAPPING;
+    public static Item FLINT_KNIFE;
 
     @EventListener
     public void registerItems(ItemRegistryEvent event) {
@@ -28,5 +31,14 @@ public class BetterThanCoalOre {
 
         GRAVEL_PILE = new TemplateItem(NAMESPACE.id("gravel_pile"))
                 .setTranslationKey(NAMESPACE, "gravel_pile");
+
+        ROCK = new TemplateItem(NAMESPACE.id("rock"))
+                .setTranslationKey(NAMESPACE, "rock");
+
+        FLINTKNAPPING = new TemplateItem(NAMESPACE.id("flintknapping")) // should be special class
+                .setTranslationKey(NAMESPACE, "flintknapping");
+
+        FLINT_KNIFE = new TemplateItem(NAMESPACE.id("flint_knife")) // should be special class...?
+                .setTranslationKey(NAMESPACE, "flint_knife");
     }
 }

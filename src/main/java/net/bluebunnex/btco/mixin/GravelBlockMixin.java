@@ -18,6 +18,6 @@ public class GravelBlockMixin {
     @Overwrite
     public int getDroppedItemId(int blockMeta, Random random) {
 
-        return random.nextInt(10) == 0 ? Item.FLINT.id : BetterThanCoalOre.GRAVEL_PILE.id;
+        return random.nextInt(16) == 0 ? Item.FLINT.id : BetterThanCoalOre.GRAVEL_PILE.id;
     }
 }

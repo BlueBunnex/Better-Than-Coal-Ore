@@ -1,3 +1,6 @@
 item.@.dirt_pile.name=Dirt Pile
 item.@.sand_pile.name=Sand Pile
 item.@.gravel_pile.name=Gravel Pile
+item.@.rock.name=Rock
+item.@.flintknapping.name=Flintknapping
+item.@.flint_knife.name=Flint Knife

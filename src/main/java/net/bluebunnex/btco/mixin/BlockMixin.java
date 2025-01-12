@@ -2,11 +2,9 @@ package net.bluebunnex.btco.mixin;
 
 import net.bluebunnex.btco.BetterThanCoalOre;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -23,11 +21,9 @@ public class BlockMixin {
     @Inject(method = "getDroppedItemCount", at = @At("HEAD"), cancellable = true)
     public void getDroppedItemCount(Random random, CallbackInfoReturnable<Integer> cir) {
 
-        System.out.println("count");
-
         if (id == Block.GRASS_BLOCK.id || id == Block.DIRT.id || id == Block.SAND.id || id == Block.GRAVEL.id) {
 
-            cir.setReturnValue(random.nextInt(2, 5)); // [2,5)
+            cir.setReturnValue(random.nextInt(2, 4)); // [2,4)
         }
     }
 
@@ -36,9 +32,9 @@ public class BlockMixin {
 
         if (id == Block.DIRT.id || id == Block.SAND.id) {
 
-            if (random.nextInt(10) == 0) {
+            if (random.nextInt(16) == 0) {
 
-                cir.setReturnValue(Item.DIAMOND.id); // TODO should be rock
+                cir.setReturnValue(BetterThanCoalOre.ROCK.id);
 
             } else {
 
