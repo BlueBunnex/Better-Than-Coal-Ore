@@ -1,8 +1,5 @@
-# Better Than Coal Ore
-Challenge Mod for b1.7.3 with an actual end goal
-
-> [!WARNING]
-> I need to change the project title
+# Better Than Coal Ore [StationAPI]
+**Better Than Coal Ore** (BTCO) is a challenge Mod for b1.7.3 with an actual end goal.
 
 # TODO
 - sand and dirt now drop sand and dirt piles, and a chance of a rock (sand's chance is higher)
