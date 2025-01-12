@@ -5,11 +5,12 @@
 - **Sand, gravel, and dirt** now drop **sand, gravel, and dirt piles**
   - **Sand and dirt** have a small chance of dropping a **rock**
   - **Gravel** has a small chance of dropping **flint**
+  - 4 rock = cobblestone
+  - 4 pile = corresponding block
 
 # TODO
 - rock + flint + leather = Flintknapping
-- 4 rock = cobblestone
-- 4 pile = corresponding block
+- remove stone and wooden tools
 
 ## Plan
 - neither wood nor stone tools exist, you have to start at... copper?
